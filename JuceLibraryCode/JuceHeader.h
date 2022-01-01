@@ -48,9 +48,9 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "wayloSynthesizer";
+    const char* const  projectName    = "waylosynthesizer";
     const char* const  companyName    = "seanwayland.com";
-    const char* const  versionString  = "1.0.0";
-    const int          versionNumber  = 0x10000;
+    const char* const  versionString  = "2.0.0";
+    const int          versionNumber  = 0x20000;
 }
 #endif
