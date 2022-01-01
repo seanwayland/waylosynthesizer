@@ -1,5 +1,10 @@
 # waylosynthesizer
 
-Synthesizer built with JUCE and https://github.com/belangeo/plugex
+Synthesizer built with JUCE
+
+**plugex
+https://github.com/belangeo/plugex
+
+**juce***
 https://github.com/juce-framework/JUCE
 
