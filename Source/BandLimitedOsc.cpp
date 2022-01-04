@@ -161,6 +161,7 @@ float BandLimitedOsc::process() {
             
             /*
             
+             // OLIVER BI-PULSE
             maxHarms = (int)(m_srOverEight / m_freq);
             numh = floorf(m_sharp * 46.f + 4.f);
             if (numh > maxHarms)
