@@ -1,7 +1,7 @@
 /*******************************************************************************
 * Plugex - PLUGin EXamples
 *
-* Plugex est une série de plugiciels auto-documentés permettant une étude 
+* Plugex est une série de plugiciels auto-documentés permettant une étude
 * autonome du développement de plugiciels avec JUCE ainsi que des bases du
 * traitement de signal audio avec le langage C++.
 *
@@ -10,6 +10,8 @@
 *******************************************************************************/
 
 #pragma once
+//#include "PolyBLEP.h"
+
 
 class BandLimitedOsc {
     public:
@@ -22,6 +24,10 @@ class BandLimitedOsc {
         void setPhase(float phase);
         void reset();
         float process();
+    double poly_blep(double t);
+
+
+        
     private:
         // globals
         float m_sampleRate;

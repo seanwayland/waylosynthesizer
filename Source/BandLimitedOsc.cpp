@@ -1,13 +1,4 @@
-/*******************************************************************************
-* Plugex - PLUGin EXamples
-*
-* Plugex est une série de plugiciels auto-documentés permettant une étude 
-* autonome du développement de plugiciels avec JUCE ainsi que des bases du
-* traitement de signal audio avec le langage C++.
-*
-* © Olivier Bélanger 2020
-*
-*******************************************************************************/
+
 
 #include <time.h>
 #include <stdlib.h>
@@ -17,6 +8,11 @@
 #ifndef M_PI
 #define M_PI (3.14159265358979323846264338327950288)
 #endif
+
+template<typename T>
+inline int64_t bitwiseOrZero(const T &t) {
+    return static_cast<int64_t>(t) | 0;
+}
 
 BandLimitedOsc::BandLimitedOsc() {
     m_wavetype = 2;
@@ -66,6 +62,23 @@ void BandLimitedOsc::setFreq(float freq) {
 
 void BandLimitedOsc::setSharp(float sharp) {
     m_sharp = sharp < 0.f ? 0.f : sharp > 1.f ? 1.f : sharp;
+}
+
+double BandLimitedOsc::poly_blep(double t)
+{
+    double dt = m_pointer_pos  / M_PI;
+    // 0 <= t < 1
+    if (t < dt) {
+        t /= dt;
+        return t+t - t*t - 1.0;
+    }
+    // -1 < t < 0
+    else if (t > 1.0 - dt) {
+        t = (t - 1.0) / dt;
+        return t*t + t+t + 1.0;
+    }
+    // 0 otherwise
+    else return 0.0;
 }
 
 float BandLimitedOsc::process() {
@@ -135,8 +148,18 @@ float BandLimitedOsc::process() {
             //value *= m_oneOverPiOverTwo;
             value *= m_oneOverPi;
             break;
+             
         // Bi-Pulse
         case 6:
+        {
+            
+            // polyblep saw
+            double t = m_pointer_pos / 2*M_PI;
+            value = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
+            value -= poly_blep(t);
+            break;}
+            /*
+            
             maxHarms = (int)(m_srOverEight / m_freq);
             numh = floorf(m_sharp * 46.f + 4.f);
             if (numh > maxHarms)
@@ -146,8 +169,43 @@ float BandLimitedOsc::process() {
             value = tanf(powf(sinf(m_twopi * m_pointer_pos), numh));
             value *= m_oneOverPiOverTwo;
             break;
+             */
         // SAH
         case 7:
+            // polybleb pulse width ? 
+            double t = m_pointer_pos / 2*M_PI;
+            double pulseWidth = 0.8;
+            t = m_pointer_pos / 2*M_PI;
+            
+            double t1 = t + 0.875 + 0.25 * (pulseWidth - 0.5);
+            t1 -= bitwiseOrZero(t1);
+
+            double t2 = t + 0.375 + 0.25 * (pulseWidth - 0.5);
+            t2 -= bitwiseOrZero(t2);
+
+            // Square #1
+            double y = t1 < 0.5 ? 1 : -1;
+
+            y += poly_blep(t1) - poly_blep(t2);
+
+            t1 += 0.5 * (1 - pulseWidth);
+            t1 -= bitwiseOrZero(t1);
+
+            t2 += 0.5 * (1 - pulseWidth);
+            t2 -= bitwiseOrZero(t2);
+
+            // Square #2
+            y += t1 < 0.5 ? 1 : -1;
+
+            y += poly_blep(t1) - poly_blep(t2);
+
+            value =  y;
+            break;
+            
+            
+            
+            
+            /*
             numh = 1.f - m_sharp;
             inc2 = 1.f / (1.f / (m_freq * m_oneOverSr) * numh);
             if (m_pointer_pos >= 1.f) {
@@ -169,6 +227,7 @@ float BandLimitedOsc::process() {
         default:
             value = 0.f;
             break;
+             */
     }
 
     if (m_wavetype < 7) {
@@ -178,3 +237,4 @@ float BandLimitedOsc::process() {
 
     return value;
 }
+
