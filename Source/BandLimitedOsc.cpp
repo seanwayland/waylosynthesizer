@@ -158,6 +158,7 @@ float BandLimitedOsc::process() {
             value = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
             value -= poly_blep(t);
             break;}
+            
             /*
             
             maxHarms = (int)(m_srOverEight / m_freq);
@@ -172,7 +173,56 @@ float BandLimitedOsc::process() {
              */
         // SAH
         case 7:
-            // polybleb pulse width ? 
+            
+            
+            /*
+            Take an upramping sawtooth and its inverse, a downramping sawtooth. Adding these two waves
+            with a well defined delay between 0 and period (1/f)
+            results in a square wave with a duty cycle ranging from 0 to 100%.
+             */
+            
+            /*
+        {maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            if (numh > maxHarms)
+                numh = maxHarms;
+            pos = m_pointer_pos + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            double valueOne = -(pos - tanhf(numh * pos) / tanhf(numh));
+            
+            pos = pos + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            double valueTwo = 1/(-(pos - tanhf(numh * pos) / tanhf(numh)));
+            value = valueOne + valueTwo;
+            break;}
+             */
+            
+            
+            
+            
+            /*
+            double t = m_pointer_pos / 2*M_PI;
+            double valueOne = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
+            valueOne -= poly_blep(t);
+            
+            double t2 = m_pointer_pos / 2*M_PI + 0.2;
+            double valueTwo = 1/((2.0*t2) - 1.0);
+            valueTwo -= poly_blep(t2);
+            
+            value = valueOne + valueTwo;
+             */
+            
+            
+            
+            
+    
+            
+            /*
+            // polybleb pulse width ?
             double t = m_pointer_pos / 2*M_PI;
             double pulseWidth = 0.8;
             t = m_pointer_pos / 2*M_PI;
@@ -201,11 +251,11 @@ float BandLimitedOsc::process() {
 
             value =  y;
             break;
+            */
             
             
             
             
-            /*
             numh = 1.f - m_sharp;
             inc2 = 1.f / (1.f / (m_freq * m_oneOverSr) * numh);
             if (m_pointer_pos >= 1.f) {
@@ -224,10 +274,11 @@ float BandLimitedOsc::process() {
             }
             m_pointer_pos += m_freq * m_oneOverSr;
             break;
+             
         default:
             value = 0.f;
             break;
-             */
+             
     }
 
     if (m_wavetype < 7) {
