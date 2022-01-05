@@ -454,6 +454,9 @@
     <ClCompile Include="..\..\Source\BandLimitedOsc.cpp">
       <Filter>waylosynthesizer\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PolyBLEP.cpp">
+      <Filter>waylosynthesizer\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
       <Filter>waylosynthesizer\Source</Filter>
     </ClCompile>
@@ -2554,6 +2557,9 @@
       <Filter>waylosynthesizer\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlugexLookAndFeel.h">
+      <Filter>waylosynthesizer\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PolyBLEP.h">
       <Filter>waylosynthesizer\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">

@@ -84,12 +84,14 @@ double BandLimitedOsc::poly_blep(double t)
 float BandLimitedOsc::process() {
     float v1 = 0.f, v2 = 0.f, pointer = 0.f, numh = 0.f, pos = 0.f;
     float inc2 = 0.f, fade = 0.f, value = 0.f, maxHarms = 0.f;
+    float phase = m_pointer_pos / 2*M_PI;
 
     switch (m_wavetype) {
         // Sine
         case 0:
             value = sinf(m_twopi * m_pointer_pos);
             break;
+            // state = std::sin(phase) * amplitude;
         // Triangle
         case 1:
             maxHarms = m_srOverFour / m_freq;
@@ -138,6 +140,8 @@ float BandLimitedOsc::process() {
             break;
         // Pulse
         case 5:
+            
+            /*
             maxHarms = m_srOverEight / m_freq;
             numh = m_sharp * 46.f + 4.f;
             if (numh > maxHarms)
@@ -148,15 +152,67 @@ float BandLimitedOsc::process() {
             //value *= m_oneOverPiOverTwo;
             value *= m_oneOverPi;
             break;
-             
+             */
+            
+            
+            // polyblep saw
+            
+        {double t = m_pointer_pos / 2*M_PI;
+            value = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
+            value -= poly_blep(t);
+            break;}
+            
+            
         // Bi-Pulse
         case 6:
         {
             
-            // polyblep saw
-            double t = m_pointer_pos / 2*M_PI;
-            value = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
-            value -= poly_blep(t);
+            /* PWM with double SAW ??*/
+            double pulseWidth = 0.75f;
+             maxHarms = m_srOverFour / m_freq;
+             numh = m_sharp * 46.f + 4.f;
+             if (numh > maxHarms)
+                 numh = maxHarms;
+             pos = m_pointer_pos + 0.5f;
+             if (pos >= 1.f)
+                 pos -= 1.f;
+             pos = pos * 2.f - 1.f;
+             value = -(pos - tanhf(numh * pos) / tanhf(numh));
+             double saw1 = value;
+            
+            // --- phase shift on second oscillator
+            maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            if (numh > maxHarms)
+                numh = maxHarms;
+            //pos = m_pointer_pos + 0.5f;
+            pos = pos + pulseWidth;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            value = -(pos - tanhf(numh * pos) / tanhf(numh));
+            double saw2 = value;
+            
+            double squareOut = 0.5*saw1- 0.5*saw2;
+            
+            // --- apply DC correction
+            double dcCorrection = 1.0 / pulseWidth;
+
+            // --- modfiy for less than 50%
+            if (pulseWidth < 0.5)
+                dcCorrection = 1.0 / (1.0 - pulseWidth);
+
+            // --- apply correction
+            squareOut *= dcCorrection;
+            
+            value = squareOut;
+            
+            
+            
+            
+            
+            
+            
             break;}
             
             /*
@@ -174,7 +230,74 @@ float BandLimitedOsc::process() {
              */
         // SAH
         case 7:
+        {
+            //state = std::sin(phase) * amplitude;
+            //double width = 0.8;
+
+            //double state = ((phase < width) * 1.0) + ((phase >= 0.5) * (phase < 0.5 + width) * -1.0);
+            //value = state;
+           // double width = 0.8;
+            //phase = m_twopi * m_pointer_pos;
+           // double pulse = (phase > width ? 1.0 : -1.0) + (width * 2.0 - 1.0);
+           // value = pulse;
             
+            
+            /*
+            float pulseWidth = 0.8;
+            
+            maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            if (numh > maxHarms)
+                numh = maxHarms;
+            pos = m_pointer_pos + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            double sawtoothSample  = -(pos - tanhf(numh * pos) / tanhf(numh));
+
+            // --- phase shift on second oscillator
+            pos = m_pointer_pos + pulseWidth;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            //pos = pos * 2.f - 1.f;
+
+            // --- generate 2nd saw: false = do not advance the clock
+            maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            if (numh > maxHarms)
+                numh = maxHarms;
+            pos = m_pointer_pos + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            double saw2  = -(pos - tanhf(numh * pos) / tanhf(numh));
+
+            // --- subtract = 180 out of phase
+            double squareOut = 0.5*sawtoothSample - 0.5*saw2;
+
+            // --- apply DC correction
+            double dcCorrection = 1.0 / pulseWidth;
+
+            // --- modfiy for less than 50%
+            if (pulseWidth < 0.5)
+                dcCorrection = 1.0 / (1.0 - pulseWidth);
+
+            // --- apply correction
+            squareOut *= dcCorrection;
+            
+            value = squareOut;
+             
+             */
+
+            
+            
+        
+            
+        
+            
+        
+            break;}
+
             
             /*
             Take an upramping sawtooth and its inverse, a downramping sawtooth. Adding these two waves
@@ -256,7 +379,7 @@ float BandLimitedOsc::process() {
             
             
             
-            
+            /*
             numh = 1.f - m_sharp;
             inc2 = 1.f / (1.f / (m_freq * m_oneOverSr) * numh);
             if (m_pointer_pos >= 1.f) {
@@ -275,6 +398,7 @@ float BandLimitedOsc::process() {
             }
             m_pointer_pos += m_freq * m_oneOverSr;
             break;
+             */
              
         default:
             value = 0.f;

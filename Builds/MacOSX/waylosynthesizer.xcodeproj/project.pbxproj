@@ -13,6 +13,10 @@
 			isa = PBXBuildFile;
 			fileRef = 5A35858EE5301AD192C31589;
 		};
+		CD9A9A213C1AB34D0D46DFF7 = {
+			isa = PBXBuildFile;
+			fileRef = F8F619698B108C2DD0847141;
+		};
 		92AB2FB3B31A16578325E21E = {
 			isa = PBXBuildFile;
 			fileRef = 1FF53FB5714ED7490BF1D5CE;
@@ -77,6 +81,10 @@
 			isa = PBXBuildFile;
 			fileRef = FBA6A210165B01F9D353D8F9;
 		};
+		A4A7FE1E9A138326FC0E32DA = {
+			isa = PBXBuildFile;
+			fileRef = 5CE08EDFC71ACFACE9E8F22C;
+		};
 		2E5217DDB12893CC2211795C = {
 			isa = PBXBuildFile;
 			fileRef = 72D9588D3596DBE0D6015C0E;
@@ -108,6 +116,10 @@
 		2008DF84145DD584D5FDE774 = {
 			isa = PBXBuildFile;
 			fileRef = 3744E3903612329606B55B08;
+		};
+		48359048BE141BB804D2D61F = {
+			isa = PBXBuildFile;
+			fileRef = 6ACEC33E4A026C9ABE5D6606;
 		};
 		146A6FB4E2A5AB8B9E582861 = {
 			isa = PBXBuildFile;
@@ -196,6 +208,13 @@
 			path = System/Library/Frameworks/Accelerate.framework;
 			sourceTree = SDKROOT;
 		};
+		0DA3888F212820416143A33D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PolyBLEP.h;
+			path = ../../Source/PolyBLEP.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		1197A6FEB2CF2716488BA0C2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -208,6 +227,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_VST3.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		231C9F6E4D95C3992CC5BEAE = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			name = "Info-Standalone_Plugin.plist";
+			path = "Info-Standalone_Plugin.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
 		26BEBB7A76230AE286572955 = {
@@ -231,39 +257,18 @@
 			path = System/Library/Frameworks/WebKit.framework;
 			sourceTree = SDKROOT;
 		};
-		330273F11EEDDFAD5318C47F = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = IOKit.framework;
-			path = System/Library/Frameworks/IOKit.framework;
-			sourceTree = SDKROOT;
-		};
-		46E95F123EFF84B76DDD88A9 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = waylosynthesizer.vst3;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		5A35858EE5301AD192C31589 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = waylosynthesizer.component;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		1FF53FB5714ED7490BF1D5CE = {
-			isa = PBXFileReference;
-			explicitFileType = archive.ar;
-			includeInIndex = 0;
-			path = libwaylosynthesizer.a;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
 		2FAC0057E926C43C9B9B3DAB = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = CoreAudio.framework;
 			path = System/Library/Frameworks/CoreAudio.framework;
+			sourceTree = SDKROOT;
+		};
+		330273F11EEDDFAD5318C47F = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = IOKit.framework;
+			path = System/Library/Frameworks/IOKit.framework;
 			sourceTree = SDKROOT;
 		};
 		3744E3903612329606B55B08 = {
@@ -301,6 +306,13 @@
 			path = System/Library/Frameworks/OpenGL.framework;
 			sourceTree = SDKROOT;
 		};
+		46E95F123EFF84B76DDD88A9 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = waylosynthesizer.vst3;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
 		48CD50383D5BBB0B5222512D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -322,12 +334,33 @@
 			path = RecentFilesMenuTemplate.nib;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5A35858EE5301AD192C31589 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = waylosynthesizer.component;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		5CE08EDFC71ACFACE9E8F22C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PolyBLEP.cpp;
+			path = ../../Source/PolyBLEP.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		613BDE9269DCE7D6DD6DDF0E = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_core";
 			path = "~/JUCE/modules/juce_core";
 			sourceTree = "<absolute>";
+		};
+		6ACEC33E4A026C9ABE5D6606 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_audio_plugin_client_Standalone.cpp";
+			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp";
+			sourceTree = "SOURCE_ROOT";
 		};
 		6BFE1FF1F4406AE23FA156DA = {
 			isa = PBXFileReference;
@@ -581,6 +614,20 @@
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
 		};
+		F8F619698B108C2DD0847141 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = waylosynthesizer.app;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		1FF53FB5714ED7490BF1D5CE = {
+			isa = PBXFileReference;
+			explicitFileType = archive.ar;
+			includeInIndex = 0;
+			path = libwaylosynthesizer.a;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
 		FBA6A210165B01F9D353D8F9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -599,8 +646,10 @@
 			isa = PBXGroup;
 			children = (
 				FBA6A210165B01F9D353D8F9,
+				5CE08EDFC71ACFACE9E8F22C,
 				DCA4949D6329E170075AD385,
 				C97450CBD2D9164C136EB879,
+				0DA3888F212820416143A33D,
 				72D9588D3596DBE0D6015C0E,
 				7F2851337AE406148696C42F,
 				005ADF6C0792CC3F8DB2EAF1,
@@ -648,6 +697,7 @@
 				9C6FFA77FBC9E6BAF5C60CC7,
 				4FE44A86D82B140166A31C7B,
 				3744E3903612329606B55B08,
+				6ACEC33E4A026C9ABE5D6606,
 				C024941CBE7EFF5CE4390A07,
 				7A97302F55CC64920DEB6893,
 				18498483CC1F0B278B4D79DF,
@@ -672,6 +722,7 @@
 			children = (
 				D38030FBB1EC8474D78CFCA5,
 				7F09D4D8DB6FDE450C2717AC,
+				231C9F6E4D95C3992CC5BEAE,
 				52AB58C80CF4A3EAE201CE28,
 			);
 			name = Resources;
@@ -702,6 +753,7 @@
 			children = (
 				46E95F123EFF84B76DDD88A9,
 				5A35858EE5301AD192C31589,
+				F8F619698B108C2DD0847141,
 				1FF53FB5714ED7490BF1D5CE,
 			);
 			name = Products;
@@ -728,6 +780,10 @@
 			isa = PBXTargetDependency;
 			target = 9B8F8BD157D19529BB68712F;
 		};
+		AE14485DA2E81AFD64245548 = {
+			isa = PBXTargetDependency;
+			target = 33879B4E3FFBCB3ED880A1A6;
+		};
 		67A648BB2474C87E1CE88512 = {
 			isa = PBXTargetDependency;
 			target = 588D4830FA4A6A91A22559B4;
@@ -737,6 +793,10 @@
 			target = 588D4830FA4A6A91A22559B4;
 		};
 		220AA863707621FE0AF77BEC = {
+			isa = PBXTargetDependency;
+			target = 588D4830FA4A6A91A22559B4;
+		};
+		4B972815213FEBEF8D5C4D50 = {
 			isa = PBXTargetDependency;
 			target = 588D4830FA4A6A91A22559B4;
 		};
@@ -1000,6 +1060,115 @@
 			};
 			name = Release;
 		};
+		EE7513D1BEF83FC45683AE73 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_DEBUG=1",
+					"DEBUG=1",
+					"JUCER_XCODE_MAC_F6D2F4CF=1",
+					"JUCE_APP_VERSION=2.0.0",
+					"JUCE_APP_VERSION_HEX=0x20000",
+					"JucePlugin_Build_VST=0",
+					"JucePlugin_Build_VST3=0",
+					"JucePlugin_Build_AU=0",
+					"JucePlugin_Build_AUv3=0",
+					"JucePlugin_Build_RTAS=0",
+					"JucePlugin_Build_AAX=0",
+					"JucePlugin_Build_Standalone=1",
+					"JucePlugin_Build_Unity=0",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../../common",
+					"$(HOME)/JUCE/modules/juce_audio_plugin_client",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
+				INFOPLIST_PREPROCESS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_HEADER_SEARCH_PATHS = (
+					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../../common",
+					"$(HOME)/JUCE/modules/juce_audio_plugin_client",
+				);
+				OTHER_LDFLAGS = "-lwaylosynthesizer";
+				PRODUCT_BUNDLE_IDENTIFIER = sean.wayland.waylasynthsizer;
+				PRODUCT_NAME = "waylosynthesizer";
+				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+			};
+			name = Debug;
+		};
+		2011E8AB171672694E173F7A = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
+				DEAD_CODE_STRIPPING = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_NDEBUG=1",
+					"NDEBUG=1",
+					"JUCER_XCODE_MAC_F6D2F4CF=1",
+					"JUCE_APP_VERSION=2.0.0",
+					"JUCE_APP_VERSION_HEX=0x20000",
+					"JucePlugin_Build_VST=0",
+					"JucePlugin_Build_VST3=0",
+					"JucePlugin_Build_AU=0",
+					"JucePlugin_Build_AUv3=0",
+					"JucePlugin_Build_RTAS=0",
+					"JucePlugin_Build_AAX=0",
+					"JucePlugin_Build_Standalone=1",
+					"JucePlugin_Build_Unity=0",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../../common",
+					"$(HOME)/JUCE/modules/juce_audio_plugin_client",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
+				INFOPLIST_PREPROCESS = NO;
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_HEADER_SEARCH_PATHS = (
+					"$(HOME)/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../../common",
+					"$(HOME)/JUCE/modules/juce_audio_plugin_client",
+				);
+				OTHER_LDFLAGS = "-lwaylosynthesizer";
+				PRODUCT_BUNDLE_IDENTIFIER = sean.wayland.waylasynthsizer;
+				PRODUCT_NAME = "waylosynthesizer";
+				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+			};
+			name = Release;
+		};
 		B0DFE07B8723FB7F7A857285 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1024,7 +1193,7 @@
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
-					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Standalone=1",
 					"JucePlugin_Build_Unity=0",
 					"JUCE_SHARED_CODE=1",
 				);
@@ -1078,7 +1247,7 @@
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
-					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Standalone=1",
 					"JucePlugin_Build_Unity=0",
 					"JUCE_SHARED_CODE=1",
 				);
@@ -1232,6 +1401,7 @@
 			dependencies = (
 				CF7AA306756732501B304C4F,
 				822E21E29A8AEE499D513A7A,
+				AE14485DA2E81AFD64245548,
 				67A648BB2474C87E1CE88512,
 			);
 			name = "waylosynthesizer - All";
@@ -1370,6 +1540,67 @@
 			productReference = 5A35858EE5301AD192C31589;
 			productType = "com.apple.product-type.bundle";
 		};
+		35538518E9FDE25E20D6046E = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE7513D1BEF83FC45683AE73,
+				2011E8AB171672694E173F7A,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FB5A2EF4A2AD8231502A02BB = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EBC2DD58B3FE9378AD3F239,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		684AB06B30F0476A81095FC8 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48359048BE141BB804D2D61F,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE20E9817D50918AAE3A6194 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D0E1043FF0CFDC11DD77108,
+				919447B10C40D3F28AA85380,
+				A6594387B41F7F6185FACE98,
+				2B2241E5BFEE53A9845283A6,
+				6A7EC9B9812343BD629A0E12,
+				D272039A2DF657CD8C7B26B4,
+				C029A78C8D08D8E1004D87BD,
+				58BAE8003C320E0EED99016D,
+				63D80291C7203717A3B53776,
+				81F678FCEA876B77D6104C45,
+				5DAE96B982C00E06C5F8DF7A,
+				4723E07DE8754D27C999941B,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33879B4E3FFBCB3ED880A1A6 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35538518E9FDE25E20D6046E;
+			buildPhases = (
+				FB5A2EF4A2AD8231502A02BB,
+				684AB06B30F0476A81095FC8,
+				EE20E9817D50918AAE3A6194,
+			);
+			buildRules = ( );
+			dependencies = (
+				4B972815213FEBEF8D5C4D50,
+			);
+			name = "waylosynthesizer - Standalone Plugin";
+			productName = waylosynthesizer;
+			productReference = F8F619698B108C2DD0847141;
+			productType = "com.apple.product-type.application";
+		};
 		F3ADCAA4E7583CF672E0552C = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1384,6 +1615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55948B902888EFD24A0AE25D,
+				A4A7FE1E9A138326FC0E32DA,
 				2E5217DDB12893CC2211795C,
 				0DF1C23BF7CC3563CC33B23A,
 				42F23393B9793129BE49A8FA,
@@ -1420,13 +1652,13 @@
 		4B019A539EAEDDB6A4AC322B = {
 			isa = PBXProject;
 			buildConfigurationList = 7993E2FE7A163CF25DDF1520;
-			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = "seanwayland.com"; TargetAttributes = { DFEA65BFA82A097DB756417F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };8B7BBF8654E7D851DED81578 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };9B8F8BD157D19529BB68712F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };588D4830FA4A6A91A22559B4 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = "seanwayland.com"; TargetAttributes = { DFEA65BFA82A097DB756417F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };8B7BBF8654E7D851DED81578 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };9B8F8BD157D19529BB68712F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };33879B4E3FFBCB3ED880A1A6 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };588D4830FA4A6A91A22559B4 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = 03F8D429A937626336FD75B6;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (DFEA65BFA82A097DB756417F, 8B7BBF8654E7D851DED81578, 9B8F8BD157D19529BB68712F, 588D4830FA4A6A91A22559B4);
+			targets = (DFEA65BFA82A097DB756417F, 8B7BBF8654E7D851DED81578, 9B8F8BD157D19529BB68712F, 33879B4E3FFBCB3ED880A1A6, 588D4830FA4A6A91A22559B4);
 			knownRegions = (en, Base);
 		};
 	};
