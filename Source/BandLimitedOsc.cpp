@@ -31,6 +31,7 @@ void BandLimitedOsc::setup(float sampleRate) {
     m_oneOverPi = 1.f / M_PI;
     m_srOverFour = m_sampleRate / 4.f;
     m_srOverEight = m_sampleRate / 8.f;
+    m_srOverTwo = m_sampleRate / 2.f;
     m_pointer_pos = m_sah_pointer_pos = 0.f;
 }
 
@@ -168,7 +169,8 @@ float BandLimitedOsc::process() {
         {
             
             /* PWM with double SAW ??*/
-            double pulseWidth = 0.75f;
+            double pulseWidth = 0.70f;
+            //maxHarms = m_srOverEight / m_freq;
              maxHarms = m_srOverFour / m_freq;
              numh = m_sharp * 46.f + 4.f;
              if (numh > maxHarms)
@@ -179,7 +181,7 @@ float BandLimitedOsc::process() {
              pos = pos * 2.f - 1.f;
              value = -(pos - tanhf(numh * pos) / tanhf(numh));
              double saw1 = value;
-            
+
             // --- phase shift on second oscillator
             maxHarms = m_srOverFour / m_freq;
             numh = m_sharp * 46.f + 4.f;
@@ -191,10 +193,10 @@ float BandLimitedOsc::process() {
                 pos -= 1.f;
             pos = pos * 2.f - 1.f;
             value = -(pos - tanhf(numh * pos) / tanhf(numh));
-            double saw2 = value;
-            
-            double squareOut = 0.5*saw1- 0.5*saw2;
-            
+            double saw2 = value/2.0;
+
+            double squareOut = 0.5*saw1 - 0.5*saw2;
+
             // --- apply DC correction
             double dcCorrection = 1.0 / pulseWidth;
 
@@ -204,14 +206,15 @@ float BandLimitedOsc::process() {
 
             // --- apply correction
             squareOut *= dcCorrection;
-            
+
             value = squareOut;
+            //value = sinf(m_twopi * m_pointer_pos);
             
             
             
             
             
-            
+
             
             break;}
             
