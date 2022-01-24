@@ -37,6 +37,7 @@ class BandLimitedOsc {
         float m_oneOverPi;
         float m_srOverFour;
         float m_srOverEight;
+        float m_srOverTwo;
 
         // parameters
         // 0 = Sine, 1 = Triangle, 2 = Square, 3 = Saw,
@@ -48,6 +49,12 @@ class BandLimitedOsc {
         float m_sah_pointer_pos;
         float m_sah_last_value;
         float m_sah_current_value;
+    
+        float phase1;
+        float phase2;
+        float pulse_width;
+        float value1;
+        float value2;
 
         // private methods
         float _clip(float x);

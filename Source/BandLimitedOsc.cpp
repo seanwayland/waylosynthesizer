@@ -21,6 +21,11 @@ BandLimitedOsc::BandLimitedOsc() {
     srand((unsigned int)time(0));
     m_sah_last_value = 0.f;
     m_sah_current_value = (rand() / (float)RAND_MAX) * 2.f - 1.f;
+    phase1 = 0.f;
+    phase2 = 0.f;
+    pulse_width = 0.f;
+    value1 = 0.f;
+    value2 = 0.f;
 }
 
 void BandLimitedOsc::setup(float sampleRate) {
@@ -169,7 +174,7 @@ float BandLimitedOsc::process() {
         {
             
             /* PWM with double SAW ??*/
-            double pulseWidth = 0.70f;
+            double pulseWidth = 0.80f;
             //maxHarms = m_srOverEight / m_freq;
              maxHarms = m_srOverFour / m_freq;
              numh = m_sharp * 46.f + 4.f;
@@ -179,7 +184,7 @@ float BandLimitedOsc::process() {
              if (pos >= 1.f)
                  pos -= 1.f;
              pos = pos * 2.f - 1.f;
-             value = -(pos - tanhf(numh * pos) / tanhf(numh));
+             value = -(pos - tanhf(numh * pos) / tanhf(numh)*2);
              double saw1 = value;
 
             // --- phase shift on second oscillator
@@ -197,8 +202,8 @@ float BandLimitedOsc::process() {
 
             double squareOut = 0.5*saw1 - 0.5*saw2;
 
-            // --- apply DC correction
-            double dcCorrection = 1.0 / pulseWidth;
+             //--- apply DC correction
+            double dcCorrection = 1.0 / pulseWidth*2;
 
             // --- modfiy for less than 50%
             if (pulseWidth < 0.5)
@@ -210,10 +215,7 @@ float BandLimitedOsc::process() {
             value = squareOut;
             //value = sinf(m_twopi * m_pointer_pos);
             
-            
-            
-            
-            
+    
 
             
             break;}
@@ -234,6 +236,60 @@ float BandLimitedOsc::process() {
         // SAH
         case 7:
         {
+            // OLIVER BI-PULSE
+//           maxHarms = (int)(m_srOverEight / m_freq);
+//           numh = floorf(m_sharp * 46.f + 4.f);
+//           if (numh > maxHarms)
+//               numh = maxHarms;
+//           if (fmodf(numh, 2.f) == 0.f)
+//               numh += 1.f;
+//           value = tanf(powf(sinf(m_twopi * m_pointer_pos), numh));
+//           value *= m_oneOverPiOverTwo;
+            
+            // naive saw ? plus polyblep ? ?? MAKES A NOISE
+            
+            
+            
+//            double t = m_pointer_pos / 2*M_PI;
+//            float width = 0.8;
+//            value = ( m_pointer_pos > width ? 1.0 : -1.0) + (width * 2.0 - 1.0);
+//            value -= poly_blep(t);
+//
+//
+//
+//            double tt = fmod(m_pointer_pos/(2*M_PI),(double)1.0);
+//            if (t>0.5)
+//                value =  -sin(m_pointer_pos);
+//            if (t<=0.5)
+//                value = (2.0*tt)-1.0;
+            
+            // SOUNDS GOOD !! A BAND LIMITED PULSE WAV
+            pulse_width = 0.7;
+            phase1 = m_pointer_pos + 0.5 * pulse_width;
+            phase2 = m_pointer_pos - 0.5 * pulse_width;
+            
+            
+            maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            
+            if (numh > maxHarms)
+                numh = maxHarms;
+            pos = phase1 + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            value1 = -(pos - tanhf(numh * pos) / tanhf(numh));
+            
+            pos = phase2 + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            value2 = -(pos - tanhf(numh * pos) / tanhf(numh));
+            
+            value = value1 - value2;
+            
+
+
             //state = std::sin(phase) * amplitude;
             //double width = 0.8;
 
@@ -293,10 +349,7 @@ float BandLimitedOsc::process() {
              */
 
             
-            
-        
-            
-        
+    
             
         
             break;}
@@ -409,7 +462,7 @@ float BandLimitedOsc::process() {
              
     }
 
-    if (m_wavetype < 7) {
+    if (m_wavetype < 8) {
         m_pointer_pos += m_freq * m_oneOverSr;
         m_pointer_pos = _clip(m_pointer_pos);
     }
