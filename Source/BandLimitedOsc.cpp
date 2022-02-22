@@ -30,6 +30,7 @@ BandLimitedOsc::BandLimitedOsc() {
 
 void BandLimitedOsc::setup(float sampleRate) {
     m_sampleRate = sampleRate;
+    m_sampleRate = 48000;
     m_oneOverSr = 1.f / m_sampleRate;
     m_twopi = 2.f * M_PI;
     m_oneOverPiOverTwo = 1.f / (M_PI / 2.f);
