@@ -71,6 +71,46 @@ void BandLimitedOsc::setSharp(float sharp) {
     m_sharp = sharp < 0.f ? 0.f : sharp > 1.f ? 1.f : sharp;
 }
 
+float BandLimitedOsc::patrice_blep(float x, float a){
+    
+   
+    if(x < a){
+        float val = (x/a)-1.0;
+        float val_squared = val*val;
+        float minus_val = -1.0*val_squared;
+        return minus_val;}
+    else if(x>1-a){
+        float val = (x-1.0)/a + 1.0;
+        return val*val;
+    }
+    else{
+        return 0.0;
+    }
+}
+
+float BandLimitedOsc::patrice_rr(float x, float w){
+    float val  = fmod(x,1);
+    if(val <1.0){
+        return 1.0;
+    }
+    else{
+        return -1.0;
+    }
+        
+}
+
+float BandLimitedOsc::patrice_rrr(float x, float w, float a){
+
+    float rrval = patrice_rr(x,w)*1.0;
+
+    float bb = patrice_blep((fmod(x,1)),a);
+    float bbb = patrice_blep((fmod(x-w,1)),a);
+    float result = rrval + bb - bbb;
+    return result;
+}
+
+
+
 double BandLimitedOsc::poly_blep(double t)
 {
     double dt = m_pointer_pos  / M_PI;
@@ -92,11 +132,19 @@ float BandLimitedOsc::process() {
     float v1 = 0.f, v2 = 0.f, pointer = 0.f, numh = 0.f, pos = 0.f;
     float inc2 = 0.f, fade = 0.f, value = 0.f, maxHarms = 0.f;
     float phase = m_pointer_pos / 2*M_PI;
+    float x1 = m_pointer_pos*1.0;
+    float oldvalue = 1.0;
 
     switch (m_wavetype) {
         // Sine
         case 0:
-            value = sinf(m_twopi * m_pointer_pos);
+            
+            //value = sinf(m_twopi * m_pointer_pos);
+            value = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125*2*oldvalue + 0.5;
+            oldvalue = value;
+            
+            
+            
             break;
             // state = std::sin(phase) * amplitude;
         // Triangle
@@ -115,12 +163,22 @@ float BandLimitedOsc::process() {
             break;
         // Square
         case 2:
-            maxHarms = m_srOverEight / m_freq;
-            numh = m_sharp * 46.f + 4.f;
-            if (numh > maxHarms)
-                numh = maxHarms;
-            value = atanf(numh * sinf(m_twopi * m_pointer_pos)) * m_oneOverPiOverTwo;
-            break;
+//        { maxHarms = m_srOverEight / m_freq;
+//            numh = m_sharp * 46.f + 4.f;
+//            if (numh > maxHarms)
+//                numh = maxHarms;
+//            value = atanf(numh * sinf(m_twopi * m_pointer_pos)) * m_oneOverPiOverTwo;
+            
+            //** PATRICE POLYBLEP
+            /* https://www.desmos.com/calculator/tm2gskpwep?fbclid=IwAR0BhxwFj2lxSyZOcqPoH8O6JK9Kyau2mDhp_2YEHn_xf9Mf3I1C2wPOK5Q */
+        {
+            
+            float w = 0.58;
+            float a = 0.1;
+            value = patrice_rrr(m_pointer_pos,w,a);
+            
+            
+        break;}
         // Saw
         case 3:
             maxHarms = m_srOverFour / m_freq;
@@ -137,13 +195,22 @@ float BandLimitedOsc::process() {
         case 4:
             maxHarms = m_srOverFour / m_freq;
             numh = m_sharp * 46.f + 4.f;
+
             if (numh > maxHarms)
                 numh = maxHarms;
             pos = m_pointer_pos + 0.f;
             if (pos >= 1.f)
                 pos -= 1.f;
             pos = pos * 2.f - 1.f;
+            
+
+            //value = patrice_rrr(m_pointer_pos,w,a);
+
+            //value = result;
             value = pos - tanhf(numh * pos) / tanhf(numh);
+            
+
+            
             break;
         // Pulse
         case 5:
@@ -163,11 +230,27 @@ float BandLimitedOsc::process() {
             
             
             // polyblep saw
-            
+            /*
         {double t = m_pointer_pos / 2*M_PI;
             value = (2.0*m_pointer_pos / 2*M_PI) - 1.0;
             value -= poly_blep(t);
             break;}
+             */
+            
+            m_pointer_pos += m_freq * m_oneOverSr;
+            
+            value = sinf(m_twopi * m_pointer_pos);
+            
+            
+            
+            
+            /*PATRICE BLEP */
+            
+            
+            
+            
+            
+            
             
             
         // Bi-Pulse

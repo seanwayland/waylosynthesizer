@@ -20,6 +20,9 @@ class BandLimitedOsc {
         void setup(float sampleRate);
         void setWavetype(int type);
         void setFreq(float freq);
+        float patrice_blep(float x, float a);
+        float patrice_rr(float x, float w);
+        float patrice_rrr(float x, float w, float a);
         void setSharp(float sharp);
         void setPhase(float phase);
         void reset();
@@ -46,9 +49,13 @@ class BandLimitedOsc {
         float m_freq;
         float m_sharp;
         float m_pointer_pos;
+        float fm_m_pointer_pos;
         float m_sah_pointer_pos;
         float m_sah_last_value;
         float m_sah_current_value;
+        float fm_depth;
+        float fm_frequency;
+        float fm_index;
     
         float phase1;
         float phase2;
