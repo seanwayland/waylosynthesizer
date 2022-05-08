@@ -143,17 +143,26 @@ float BandLimitedOsc::process() {
         // Sine
         case 0:
             
-            //value = sinf(m_twopi * m_pointer_pos);
+            value = sinf(m_twopi * m_pointer_pos + 6*oldvalue) ;
+            oldvalue= value;
             //value = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125*2*oldvalue + 1.5;
-            //oldvalue = value;
+         
             
+            //signal += wave_function(note_phase * note_frequency / sample_rate + fm_index * sin(note_phase * fm_frequency * pi / sample_rate))*note_amplitude
+            // dexed
+//            average = (old0 + old1) / 2
+//            scaled_fb = average >> fb_level
+//            old1 = old0
+//            old0 = sin(phase + scaled_fb) * gain
+//            output[i] = old0
+//
 
             
             // horrible sounding FM
             
-            modulator = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125;
-            carrier = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125;
-            value = sin(2*M_PI*carrier + 2.0*sin(modulator));
+            //modulator = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125;
+            //carrier = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125;
+            //value = sin(2*M_PI*carrier + 2.0*sin(modulator));
 
             
 
@@ -169,12 +178,27 @@ float BandLimitedOsc::process() {
             
             // Seans crazy algorithm
             
-            value = cosf( (sinf(m_twopi * m_pointer_pos) + cosf(m_pointer_pos)));
+            //value = cosf( (sinf(m_twopi * m_pointer_pos) + cosf(m_pointer_pos)));
+            
+            
+            //modulator = sinf(m_twopi * m_pointer_pos);
+            //carrier = modulator;
+            //value = sin(2*M_PI*carrier + 2.0*sin(modulator));
+            
+            
+            //value = sin(m_twopi * m_pointer_pos +  (1.8*sin(2*m_twopi * m_pointer_pos)));
+            // sounds like a DX7
+        {float x = m_twopi * m_pointer_pos;
+            float A1 = 1.0;
+            float f1 = 1.0;
+            float A2 = 5.0;
+            float f2 = 1.0;
+            value = A1 * sin(f1*x + A2 * sin(f2*x));
             
          
     
 
-            break;
+            break;}
             
             
             
@@ -229,15 +253,30 @@ float BandLimitedOsc::process() {
         // Pulse
         case 5:
             
+            // FM synthesis using band limited saw wav
+        {maxHarms = m_srOverFour / m_freq;
+            numh = m_sharp * 46.f + 4.f;
+            if (numh > maxHarms)
+                numh = maxHarms;
+            pos = m_pointer_pos + 0.5f;
+            if (pos >= 1.f)
+                pos -= 1.f;
+            pos = pos * 2.f - 1.f;
+            float x = -(pos - tanhf(numh * pos) / tanhf(numh));
+            float A1 = 1.0;
+            float f1 = 1.0;
+            float A2 = 2.0;
+            float f2 = 1.0;
+            value = A1 * sin(f1*x + A2 * sin(f2*x));
+            break;}
+            
+            
+            
 
             
         
-           // nasty fm with feedback
-            
-            modulator = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125*2*oldvalue + 1.5;
-            carrier = (m_pointer_pos*(m_pointer_pos-0.5)*(m_pointer_pos-1))/0.0481125*2*oldvalue + 1.5;
-            value = sin(2*M_PI*carrier + 1.5*sin(modulator));
-            oldvalue = value;
+     
+
             
             
             
@@ -266,7 +305,7 @@ float BandLimitedOsc::process() {
 
             
             // SOUNDS GOOD !! A BAND LIMITED PULSE WAV
-            pulse_width = 0.7;
+            pulse_width = 0.8;
             phase1 = m_pointer_pos + 0.5 * pulse_width;
             phase2 = m_pointer_pos - 0.5 * pulse_width;
             
